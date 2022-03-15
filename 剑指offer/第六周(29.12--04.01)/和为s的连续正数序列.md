@@ -16,21 +16,34 @@
 
 ### 解答方法：
 
-1. 
+1. 滑动窗口
 
 ```java
-public class Solution {
-    // you need to treat n as an unsigned value
-    public int hammingWeight(int n) {
-        int res = 0;
-        while(n != 0){
-            if((n & 1) == 1) {
-                res++;
+class Solution {
+    public int[][] findContinuousSequence(int target) {
+        ArrayList<int[]> res = new ArrayList<>();
+        for (int i = 1; i < target; i++) {
+            int l = i, r = l, sum = 0, count = 0;
+            while (r < target) {
+                sum += r;
+                if (sum < target) {
+                    r++;
+                } else if (sum > target) {
+                    break;
+                } else {
+                    int[] tmp = new int[r - l + 1];
+                    for (int j = i; j <= r; j++) {
+                        tmp[count++] = j;
+                    }
+                    res.add(tmp);
+                    break;
+                }
             }
-            n >>>= 1;
         }
-        return res;
+        return res.toArray(new int[0][]);
     }
 }
 ```
 
+- l 取值取到 target / 2 就可以
+- 不用外层再加个循环， l 指针移动 

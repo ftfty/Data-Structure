@@ -44,7 +44,29 @@ class Solution {
 
 2. 位运算
 
-    ![image-20220107170835678](images/image-20220107170835678.png)
 
-    ![image-20220107170946907](images/image-20220107170946907.png)
+```java
+//所有数字通过二进制形式相加
+//不能被 3 整除的位置即为目标值有 值 的d
+class Solution {
+    public int singleNumber(int[] nums) {
+        int[] k = new int[32];
+        for(int i = 0; i < nums.length; i++){
+            for(int j = 0; j < 32; j++){
+                k[j] += ((nums[i] >> j) & 1) == 1 ? 1 : 0;
+            }
+        }
+        int res = 0;
+        for(int i = 31; i >= 0; i--){
+            res <<= 1;
+            if(k[i] % 3 == 1){
+                res |= 1;
+            } 
+        }
+        return res;
+    }
+}
+```
+
+
 
